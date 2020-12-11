@@ -9,14 +9,16 @@
 import UIKit
 
 class WelcomeViewController: UIViewController {
-
+    
+    // MARK: - IBOutlets & Properties
     @IBOutlet weak var titleLabel: UILabel!
     
+    // MARK: - WelcomeViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
        
     }
     
-
+    // MARK: - Private
 }
