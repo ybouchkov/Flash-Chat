@@ -14,9 +14,7 @@ class RegisterViewController: UIViewController {
     // MARK: - IBOutlets & Properties
     @IBOutlet weak var emailTextfield: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
-    
-    static let RegisterToChatSegue = "RegisterToChat"
-    
+        
     // MARK: - RegisterViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +37,7 @@ class RegisterViewController: UIViewController {
                 return
             }
             // navigate to chat view controller
-            strongSelf.performSegue(withIdentifier: RegisterViewController.RegisterToChatSegue, sender: self)
+            strongSelf.performSegue(withIdentifier: K.registerSegue, sender: self)
         }
     }
     

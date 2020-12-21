@@ -15,8 +15,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailTextfield: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
     
-    static let LoginToChat = "LoginToChat"
-    
     // MARK: - IBActions
     @IBAction
     private func loginPressed(_ sender: UIButton) {
@@ -31,7 +29,7 @@ class LoginViewController: UIViewController {
                 return
             }
             
-            strongSelf.performSegue(withIdentifier: LoginViewController.LoginToChat, sender: self)
+            strongSelf.performSegue(withIdentifier: K.loginSegue, sender: self)
         }
     }
     

@@ -26,7 +26,7 @@ class WelcomeViewController: UIViewController {
     private func setupAnimation() {
         titleLabel.text = ""
         var characterIndex = 0
-        let titleText = "⚡️FlashChat"
+        let titleText = K.appName
         for letter in titleText {
             Timer.scheduledTimer(withTimeInterval: 0.1 * Double(characterIndex), repeats: false) { [weak self] timer in
                 guard let strongSelf = self else {
@@ -39,6 +39,6 @@ class WelcomeViewController: UIViewController {
     }
     
     private func setupCLTypeLabel() {
-        titleLabel.text = "⚡️FlashChat"
+        titleLabel.text = K.appName
     }
 }

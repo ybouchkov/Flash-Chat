@@ -18,7 +18,7 @@ class ChatViewController: UIViewController {
     // MARK: - ChatViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "⚡️FlashChat"
+        title = K.appName
     }
     
     override func viewWillAppear(_ animated: Bool) {
