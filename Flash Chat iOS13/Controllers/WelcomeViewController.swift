@@ -7,17 +7,19 @@
 //
 
 import UIKit
+import CLTypingLabel
 
 class WelcomeViewController: UIViewController {
     
     // MARK: - IBOutlets & Properties
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleLabel: CLTypingLabel!
     
     // MARK: - WelcomeViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupAnimation()
+//        setupAnimation()
+        setupCLTypeLabel()
     }
     
     // MARK: - Private
@@ -36,4 +38,7 @@ class WelcomeViewController: UIViewController {
         }
     }
     
+    private func setupCLTypeLabel() {
+        titleLabel.text = "⚡️FlashChat"
+    }
 }
