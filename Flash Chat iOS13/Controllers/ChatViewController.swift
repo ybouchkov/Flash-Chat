@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ChatViewController: UIViewController {
 
@@ -20,10 +21,10 @@ class ChatViewController: UIViewController {
 
     }
     
-    // MARK: - IBActions
+    // MARK: - IBActions: private
     @IBAction
     private func sendPressed(_ sender: UIButton) {
     }
     
-
+    // MARK: - Private
 }
