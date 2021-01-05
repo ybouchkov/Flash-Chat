@@ -34,6 +34,7 @@ class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = K.appName
+        loadMessages()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,7 +69,30 @@ class ChatViewController: UIViewController {
             print ("Error signing out: %@", signOutError)
         }
     }
+
     // MARK: - Private
+    private func loadMessages() {
+        messages = []
+        db.collection(K.FStore.collectionName).getDocuments { [weak self] (querySnapshot, error) in
+            guard let strongSelf = self else { return }
+            if let error = error {
+                print("There was an issue retriving data from Firestor - \(error)")
+            } else {
+                if let snapshotDocument = querySnapshot?.documents {
+                    for document in snapshotDocument {
+                        let data = document.data()
+                        if let messageSender = data[K.FStore.senderField] as? String, let messageBody = data[K.FStore.bodyField] as? String {
+                            let newMessage = Message(sender: messageSender, body: messageBody)
+                            strongSelf.messages.append(newMessage)
+                            DispatchQueue.main.async {
+                                strongSelf.tableView.reloadData()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate & UITableViewDatasource
