@@ -24,11 +24,7 @@ class ChatViewController: UIViewController {
     // reference to db
     let db = Firestore.firestore()
     
-    var messages: [Message] = [
-        Message(sender: "1@2.com", body: "Hey!"),
-        Message(sender: "a@b.com", body: "Hello!"),
-        Message(sender: "1@2.com", body: "What's up?")
-    ]
+    var messages: [Message] = []
     
     // MARK: - ChatViewController Lifecycle
     override func viewDidLoad() {
@@ -47,8 +43,9 @@ class ChatViewController: UIViewController {
         
         if let messageBody = messageTextfield.text, let messageSender = Auth.auth().currentUser?.email {
             db.collection(K.FStore.collectionName).addDocument(data: [
-                                                                K.FStore.senderField: messageSender,
-                                                                K.FStore.bodyField: messageBody
+                K.FStore.senderField: messageSender,
+                K.FStore.bodyField: messageBody,
+                K.FStore.dateField: Date().timeIntervalSince1970
             ]) { (error) in
                 if let error = error {
                     print("There was an issue saving data in firestore - \(error)")
@@ -72,7 +69,9 @@ class ChatViewController: UIViewController {
 
     // MARK: - Private
     private func loadMessages() {
-        db.collection(K.FStore.collectionName).addSnapshotListener { [weak self] (querySnapshot, error) in
+        db.collection(K.FStore.collectionName)
+            .order(by: K.FStore.dateField)
+            .addSnapshotListener { [weak self] (querySnapshot, error) in
             guard let strongSelf = self else { return }
             strongSelf.messages = []
             if let error = error {
