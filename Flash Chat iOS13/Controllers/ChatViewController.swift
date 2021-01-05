@@ -72,9 +72,9 @@ class ChatViewController: UIViewController {
 
     // MARK: - Private
     private func loadMessages() {
-        messages = []
-        db.collection(K.FStore.collectionName).getDocuments { [weak self] (querySnapshot, error) in
+        db.collection(K.FStore.collectionName).addSnapshotListener { [weak self] (querySnapshot, error) in
             guard let strongSelf = self else { return }
+            strongSelf.messages = []
             if let error = error {
                 print("There was an issue retriving data from Firestor - \(error)")
             } else {
