@@ -40,7 +40,6 @@ class ChatViewController: UIViewController {
     // MARK: - IBActions: private
     @IBAction
     private func sendPressed(_ sender: UIButton) {
-        
         if let messageBody = messageTextfield.text, let messageSender = Auth.auth().currentUser?.email {
             db.collection(K.FStore.collectionName).addDocument(data: [
                 K.FStore.senderField: messageSender,
@@ -51,6 +50,9 @@ class ChatViewController: UIViewController {
                     print("There was an issue saving data in firestore - \(error)")
                 } else {
                     print("Successfully saved data!")
+                    DispatchQueue.main.async {
+                        self.messageTextfield.text = ""
+                    }
                 }
             }
         }
@@ -85,6 +87,8 @@ class ChatViewController: UIViewController {
                             strongSelf.messages.append(newMessage)
                             DispatchQueue.main.async {
                                 strongSelf.tableView.reloadData()
+                                let indexPath = IndexPath(row: strongSelf.messages.count - 1, section: 0)
+                                strongSelf.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
                             }
                         }
                     }
@@ -102,8 +106,15 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let message = messages[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath) as! MessageTableViewCell
         cell.config(label: messages[indexPath.row].body)
+        // This is a message from current user
+        if message.sender == Auth.auth().currentUser?.email {
+            cell.configMeUser()
+        } else {
+            cell.configYouUser()
+        }
         return cell
     }
 }
